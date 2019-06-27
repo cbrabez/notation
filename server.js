@@ -28,11 +28,14 @@ mongoose.connect(dbConfig.url, {
 
 // define a simple route
 app.get('/', (req, res) => {
-    res.json({"message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes."});
+    res.json({"message": "Welcome to Notation application. Take notes quickly. Organize and keep track of all your notes."});
 });
 
 // Require Notes routes
 require('./routes/note.routes.js')(app);
+var userRoutes = require('./routes/user.routes.js');
+
+app.use('/users', userRoutes);
 
 // listen for requests
 app.listen(3000, () => {
