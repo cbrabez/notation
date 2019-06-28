@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const users = require('../controllers/user.controller.js');
+var VerifyToken = require('../auth/VerifyToken');
 
 // CREATES A NEW USER
 router.post('/register', users.create); 
@@ -15,7 +16,7 @@ router.get('/', users.getAll);
 router.get('/:id', users.getOne);
 
 // GETS CURRENT USER
-router.get('/auth/me', users.getCurrentUser);
+router.get('/auth/me', VerifyToken,  users.getCurrentUser);
 
 // DELETES A USER FROM THE DATABASE
 router.delete('/:id', users.delete);
@@ -23,5 +24,7 @@ router.delete('/:id', users.delete);
 // UPDATES A SINGLE USER IN THE DATABASE
 router.put('/:id', users.update);
 
+// LOGOUT USER
+router.get('/logout', users.logout);
 
 module.exports = router;

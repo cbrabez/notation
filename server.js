@@ -10,6 +10,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
 
+// DEFINE VIEW ENGINE 
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + '/public'));
+
 // Configuring the database
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
