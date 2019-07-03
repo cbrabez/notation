@@ -3,12 +3,10 @@ module.exports = (app) => {
 
     // Create a new Note
     app.post('/notes', notes.create);
-
     // Retrieve all Notes
     app.get('/notes', notes.findAll, function(req, res){
         res.render('notes/overview', {notes: res.locals.notes});
     });
-
     // Retrieve a single Note with noteId
     app.get('/notes/:noteId', notes.findOne);
 

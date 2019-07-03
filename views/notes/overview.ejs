@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Include Bootstrap -->
+    <% include ../partials/bootstrap.ejs %>
+
+    <!-- Include basic styling-->
+    <% include ../partials/baseCSS.ejs %>
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <% include ../partials/header.ejs %>
+    <div class="flex-container">
+    <div class="list-group notes-list">
+        <% notes.forEach(function(note){ %>
+            <a href="#" class="list-group-item list-group-item-action" onclick="toggle_visibility('<%= note._id %>');">
+                <div class="d-inline-flex w-100 justify-content-between">
+                    <h5 class="mb-1"><%= note.title %></h5>
+                    <small>3 days ago</small>
+                </div>
+                <small><%= note.content.substring(0, 55) %></small>
+            </a>
+        <% }) %>
+        <div>
+            <button id="create-note-button" type="button" class="btn btn-primary btn-sm">New Note</button>
+        </div>  
+
+    </div>
+    <section id="note-preview">
+        
+    </section>
+
+</div>
+
+<script type="text/javascript">
+var createNoteButton = document.getElementById("create-note-button");
+createNoteButton.onclick = createNote;
+
+
+function toggle_visibility(id) {   
+    var e = document.getElementById(id);
+   // if(e.style.display == 'block')
+     //  e.style.display = 'none';
+     fetch('http://localhost:3000/notes/'+ id)
+         .then(function(response) {
+           
+           return response.json();
+         })
+         .then(function(myJson) {
+            document.getElementById('note-preview').innerHTML = 
+                '<div id="note-container" data-id="'+ id +'">' +
+                    '<h2 id="note-title" contentEditable="true">' + myJson.title + '</h2>' +
+                    '<p id="note-content" contentEditable="true">' + myJson.content + '</p>' +
+                    '<button id="save-note" type="button" class="btn btn-primary btn-sm">Save Changes</button>' +
+                    '<button id="delete-note" type="button" class="btn btn-danger btn-sm">Delete Note</button>' +
+                '</div>'
+            initiateSaveDelete();
+         });
+         
+}
+
+function initiateSaveDelete(){
+    var savebutton = document.getElementById("save-note");
+    var deletebutton = document.getElementById("delete-note");
+    savebutton.onclick = saveNote;
+    deletebutton.onclick = deleteNote;
+}
+
+function saveNote(){
+    let noteID = document.getElementById("note-container").dataset.id;
+    let noteTitle = document.getElementById('note-title').innerHTML;
+    let noteContent = document.getElementById('note-content').innerHTML;
+
+    $.ajax({
+       method: "PUT",
+       url: "/notes/" + noteID,
+       data: {title: noteTitle, content: noteContent},
+       success: function(result) {
+           location.reload(true);
+       }
+    });    
+};
+
+function createNote () {
+    let noteTitle = "Title";   
+    let noteContent = " ";
+    
+    $.ajax({
+       method: "POST",
+       url: "/notes/",
+       data: {title: noteTitle, content: noteContent},
+       success: function(result) {
+           location.reload(true);
+       }
+    }); 
+}
+
+function deleteNote () {
+    let noteID = document.getElementById("note-container").dataset.id;
+    $.ajax({
+       method: "DELETE",
+       url: "/notes/" + noteID,
+       success: function(result) {
+           location.reload(true);
+       }
+    }); 
+}
+</script>
+
+<% include ../partials/footer.ejs %>
