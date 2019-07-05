@@ -68,7 +68,7 @@ exports.update = (req,res) => {
     });
 }
 
-exports.login = (req, res) => {
+exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email }, function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');
@@ -79,8 +79,10 @@ exports.login = (req, res) => {
         var token = jwt.sign({ id: user._id }, config.secret, {
           expiresIn: 86400 // expires in 24 hours
         });
+        res.cookie('token', token, { maxAge: 900000});
         
-        res.status(200).send({ auth: true, token: token });
+        next();
+        //res.status(200).send({ auth: true, token: token });
       });
       
 }
