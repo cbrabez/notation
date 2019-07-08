@@ -1,22 +1,21 @@
 var jwt = require('jsonwebtoken');
 var config = require('../config');
+var User = require('../models/user.model');
 
 function verifyToken(req, res, next) {
   //var token = req.headers['x-access-token'];
-<<<<<<< HEAD
-  var token = req.cookies.token
-=======
   var token = req.cookies.token;
->>>>>>> b0f53ed6ac2fb25aedf04f860ec04337388b4565
   if (!token)
     return res.status(403).send({ auth: false, message: 'No token provided.' });
     
   jwt.verify(token, config.secret, function(err, decoded) {
     if (err)
     return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-      
     // if everything good, save to request for use in other routes
     req.userId = decoded.id;
+    User.findById(req.userId, function(err, user){
+      res.locals.user = user;
+    }); 
     next();
   });
 }

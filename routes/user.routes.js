@@ -4,30 +4,22 @@ const users = require('../controllers/user.controller.js');
 var VerifyToken = require('../auth/VerifyToken');
 
 
-router.get('/register', function(req, res) {
-    res.render('register');
+router.get('/auth/register', function(req, res) {
+    res.render('register', {user: res.locals.user});
 }); 
 
 // CREATES A NEW USER
-router.post('/register', users.create); 
+router.post('/auth/register', users.create); 
 
-router.get('login', function(req, res){
+router.get('/auth/login', function(req, res){
     res.render('login');
 });
 
 // LOGIN USER
-<<<<<<< HEAD
-router.post('/login', users.login);
-router.get('/login', function(req, res){
-    res.render('login');
-});
-=======
 router.post('/login', users.login, function(req, res){
-    console.log(req.cookies)
     res.redirect('../notes');
 });
 
->>>>>>> b0f53ed6ac2fb25aedf04f860ec04337388b4565
 // RETURNS ALL THE USERS IN THE DATABASE
 router.get('/', users.getAll);
 
@@ -44,6 +36,8 @@ router.delete('/:id', users.delete);
 router.put('/:id', users.update);
 
 // LOGOUT USER
-router.get('/logout', users.logout);
+router.get('/auth/logout', users.logout, function(req, res){
+    res.render('login');
+});
 
 module.exports = router;

@@ -50,7 +50,9 @@ exports.getCurrentUser = (req, res, next) => {
         function (err, user) {
         if (err) return res.status(500).send("There was a problem finding the user.");
         if (!user) return res.status(404).send("No user found.");
-        res.status(200).send(user);
+        //res.status(200).send(user);
+        res.user = user;
+        next();
     });
 }
 
@@ -79,18 +81,16 @@ exports.login = (req, res, next) => {
         var token = jwt.sign({ id: user._id }, config.secret, {
           expiresIn: 86400 // expires in 24 hours
         });
-<<<<<<< HEAD
-        res.cookie('token', token, {maxAge: 10800});
-=======
         res.cookie('token', token, { maxAge: 900000});
-        
         next();
->>>>>>> b0f53ed6ac2fb25aedf04f860ec04337388b4565
         //res.status(200).send({ auth: true, token: token });
       });
       
 }
 
-exports.logout = (req, res) => {
-    res.status(200).send({ auth: false, token: null});
+exports.logout = (req, res, next) => {
+    res.cookie('token', {maxAge: Date.now()});
+    console.log(res.cookies)
+    next()
+    //res.status(200).send({ auth: false, token: null});
 }
