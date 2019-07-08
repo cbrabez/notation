@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+
 
 // create express app
 const app = express();
@@ -9,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
+app.use(cookieParser());
 
 // DEFINE VIEW ENGINE 
 app.set("view engine", "ejs");
@@ -32,7 +35,7 @@ mongoose.connect(dbConfig.url, {
 
 // define a simple route
 app.get('/', (req, res) => {
-    res.json({"message": "Welcome to Notation application. Take notes quickly. Organize and keep track of all your notes."});
+    res.render('login');
 });
 
 // Require Notes routes

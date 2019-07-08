@@ -1,10 +1,12 @@
+var VerifyToken = require('../auth/VerifyToken');
+
 module.exports = (app) => {
     const notes = require('../controllers/note.controller.js');
 
     // Create a new Note
     app.post('/notes', notes.create);
     // Retrieve all Notes
-    app.get('/notes', notes.findAll, function(req, res){
+    app.get('/notes',VerifyToken, notes.findAll, function(req, res){
         res.render('notes/overview', {notes: res.locals.notes});
     });
     // Retrieve a single Note with noteId
