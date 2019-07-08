@@ -8,7 +8,9 @@ router.post('/register', users.create);
 
 // LOGIN USER
 router.post('/login', users.login);
-
+router.get('/login', function(req, res){
+    res.render('login');
+});
 // RETURNS ALL THE USERS IN THE DATABASE
 router.get('/', users.getAll);
 
