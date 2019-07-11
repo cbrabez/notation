@@ -7,6 +7,7 @@
 
     <!-- Include Bootstrap -->
     <% include ../partials/bootstrap.ejs %>
+    <% include ../partials/thirdPartyCSS.ejs %>
 
     <!-- Include basic styling-->
     <% include ../partials/baseCSS.ejs %>
@@ -31,12 +32,11 @@
         </div>  
 
     </div>
-    <section id="note-preview">
-        
-    </section>
+    <section id="note-preview"></section>
 
 </div>
 
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script type="text/javascript">
 var createNoteButton = document.getElementById("create-note-button");
 createNoteButton.onclick = createNote;
@@ -54,13 +54,21 @@ function toggle_visibility(id) {
             document.getElementById('note-preview').innerHTML = 
                 '<div id="note-container" data-id="'+ id +'">' +
                     '<h2 id="note-title" contentEditable="true">' + myJson.title + '</h2>' +
+                    '<div id="editor">' + 
                     '<p id="note-content" contentEditable="true">' + myJson.content + '</p>' +
+                    '</div>' +
                     '<button id="save-note" type="button" class="btn btn-primary btn-sm">Save Changes</button>' +
                     '<button id="delete-note" type="button" class="btn btn-danger btn-sm">Delete Note</button>' +
                 '</div>'
-            initiateSaveDelete();
+            initiateSaveDelete(); 
+            initiateQuill();        
          });
-         
+}
+
+function initiateQuill(){
+       var quill = new Quill('#editor', {
+                        theme: 'snow'
+                    });   
 }
 
 function initiateSaveDelete(){
@@ -70,7 +78,6 @@ function initiateSaveDelete(){
     savebutton.onclick = saveNote;
     deletebutton.onclick = deleteNote;
     noteTitle.addEventListener("keydown", function (e) {
-  
 
     if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
         if (!e) {
@@ -89,15 +96,11 @@ function initiateSaveDelete(){
     }
 }
 
-
-
-
-
-
 function saveNote(){
     let noteID = document.getElementById("note-container").dataset.id;
     let noteTitle = document.getElementById('note-title').innerHTML;
-    let noteContent = document.getElementById('note-content').innerHTML;
+    //let noteContent = document.getElementById('note-content').innerHTML;
+    let noteContent = $(".ql-editor").html();
 
     $.ajax({
        method: "PUT",

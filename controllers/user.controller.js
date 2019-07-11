@@ -90,7 +90,6 @@ exports.login = (req, res, next) => {
 
 exports.logout = (req, res, next) => {
     res.cookie('token', {maxAge: Date.now()});
-    console.log(res.cookies)
     next()
     //res.status(200).send({ auth: false, token: null});
 }
