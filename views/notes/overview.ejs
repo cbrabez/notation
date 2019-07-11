@@ -41,7 +41,6 @@
 var createNoteButton = document.getElementById("create-note-button");
 createNoteButton.onclick = createNote;
 
-
 function toggle_visibility(id) {   
     var e = document.getElementById(id);
    // if(e.style.display == 'block')
@@ -67,9 +66,33 @@ function toggle_visibility(id) {
 function initiateSaveDelete(){
     var savebutton = document.getElementById("save-note");
     var deletebutton = document.getElementById("delete-note");
+    var noteTitle = document.getElementById("note-title");
     savebutton.onclick = saveNote;
     deletebutton.onclick = deleteNote;
+    noteTitle.addEventListener("keydown", function (e) {
+  
+
+    if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
+        if (!e) {
+        e = window.event;
+    }
+    if (e.preventDefault) {
+        e.preventDefault();
+    } else {
+        e.returnValue = false;
+    }
+        validate(e);
+    }
+    });
+    function validate(e) {
+    // insert code to swich to the next field
+    }
 }
+
+
+
+
+
 
 function saveNote(){
     let noteID = document.getElementById("note-container").dataset.id;
@@ -87,13 +110,13 @@ function saveNote(){
 };
 
 function createNote () {
-    let noteTitle = "Title";   
+    //let noteTitle = "Title";   
     let noteContent = " ";
     
     $.ajax({
        method: "POST",
-       url: "/notes/",
-       data: {title: noteTitle, content: noteContent},
+       url: "/notes",
+       data: {content: noteContent},
        success: function(result) {
            location.reload(true);
        }

@@ -13,9 +13,8 @@ exports.create = (req, res) => {
     const note = new Note({
         title: req.body.title || "Untitled Note", 
         content: req.body.content,
-        createdBy: req.userId
+        createdBy: {id: req.userId}
     });
-
     // Save Note in the database
     note.save()
     .then(data => {
@@ -29,7 +28,7 @@ exports.create = (req, res) => {
 
 // Retrieve and return all notes from the database.
 exports.findAll = (req, res, next) => {
-    Note.find({createdBy: req.userId})
+    Note.find({"createdBy.id": req.userId})
     .then(notes => {
         res.locals.notes = notes;
         next();
@@ -75,7 +74,7 @@ exports.update = (req, res) => {
     Note.findByIdAndUpdate(req.params.noteId, {
         title: req.body.title || "Untitled Note",
         content: req.body.content,
-        createdBy: req.userId
+        createdBy: {id: req.userId}
     }, {new: true})
     .then(note => {
         if(!note) {
