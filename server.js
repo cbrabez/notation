@@ -43,28 +43,12 @@ mongoose.connect(dbConfig.url, {
     console.log('Could not connect to the database. Exiting now...', err);
     process.exit();
 });
-
-
-// define a simple route
-app.get('/', (req, res) => {
-    res.render('login');
-});
-
-/*
-app.all('/', function(req, res){
-    req.flash('test', 'it worked');
-    res.redirect('/user/auth/login')
-});
-
-app.all('/user/auth/login', function(req, res){
-    res.send(JSON.stringify(req.flash('test')));
-  });
-*/
-
 // Require Notes routes
 require('./routes/note.routes.js')(app);
 var userRoutes = require('./routes/user.routes.js');
+var indexRoutes = require('./routes/index.routes.js');
 
+app.use('/', indexRoutes);
 app.use('/users', userRoutes);
 
 // listen for requests

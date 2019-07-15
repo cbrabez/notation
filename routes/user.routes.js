@@ -4,6 +4,11 @@ const users = require('../controllers/user.controller.js');
 var VerifyToken = require('../auth/VerifyToken');
 
 
+// define a simple route
+router.get('/', (req, res) => {
+    res.render('landing');
+});
+
 router.get('/auth/register', function(req, res) {
     res.render('register', {user: res.locals.user});
 }); 
