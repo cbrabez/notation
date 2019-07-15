@@ -12,12 +12,16 @@ router.get('/auth/register', function(req, res) {
 router.post('/auth/register', users.create); 
 
 router.get('/auth/login', function(req, res){
-    res.render('login');
+    res.render('login', {error: res.locals.errors});
 });
 
 // LOGIN USER
 router.post('/login', users.login, function(req, res){
+    if(res.locals.errors !== null){
+         res.redirect('/users/auth/login/')  
+    } else{
     res.redirect('../notes');
+    }
 });
 
 // RETURNS ALL THE USERS IN THE DATABASE

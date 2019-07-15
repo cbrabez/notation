@@ -7,7 +7,7 @@ module.exports = (app) => {
     app.post('/notes', VerifyToken, notes.create);
     // Retrieve all Notes
     app.get('/notes', VerifyToken, notes.findAll, function(req, res){
-        res.render('notes/overview', {notes: res.locals.notes, user: res.locals.user});
+        res.render('notes/overview', {notes: res.locals.notes, user: res.locals.user, flashSuccess: res.locals.success, flashError: res.locals.errors});
     });
     // Retrieve a single Note with noteId
     app.get('/notes/:noteId', VerifyToken, notes.findOne);

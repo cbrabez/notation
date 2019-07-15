@@ -72,12 +72,25 @@ exports.update = (req,res) => {
 
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email }, function (err, user) {
-        if (err) return res.status(500).send('Error on the server.');
-        if (!user) return res.status(404).send('No user found.');
-        
+        if (err){
+            req.flash('error', 'Could not login, please check username and password.');
+            //res.locals.loginStatus = 'error';
+            return next();
+        }
+        //return res.status(500).send('Error on the server.');
+        if (!user){  
+            req.flash('error', 'There is no user with this account name.');
+            //res.locals.loginStatus = 'noUser';
+        //return res.status(404).send('No user found.');
+            return next()
+        }
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-        if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
-        
+        if (!passwordIsValid) {
+            req.flash('error', 'Please enter a valid password.');
+            //return res.status(401).send({ auth: false, token: null });
+            return next()
+        }
+        res.locals.errors = null;
         var token = jwt.sign({ id: user._id }, config.secret, {
           expiresIn: 86400 // expires in 24 hours
         });

@@ -9,10 +9,17 @@
 
     <!-- Include basic styling-->
     <% include ./partials/baseCSS.ejs %>
-    <title>Document</title>
+    <title>notation |   minimal note taking app</title>
 </head>
 <body>
-    
+    <% if ( error.length > 0) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= error %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    <% } %>
     <form action="/users/login" method="post">
   <div class="form-group">
     <label for="email">Email address</label>
@@ -23,12 +30,8 @@
     <label for="password">Password</label>
     <input type="password" class="form-control" name="password" id="password" placeholder="Password">
   </div>
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">Login</button>
 </form>
-<input type="button" onclick="location.href='/users/register';" value="Go to Google" />
+<p><small>If you have no Notation-Account, you can register one <a href="/users/auth/register" target="_self">here</a>.</small></p>
 </body>
 </html>
