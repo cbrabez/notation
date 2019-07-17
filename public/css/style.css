@@ -1,32 +1,102 @@
-.notes-list{
-    width: 30%;
-}
-
-#note-preview{  
-    width: 70%;
-    padding: 0 0 0 2em;
-
-}
-
-.btn{
-    margin: 0 0 0 1em;
-}
-
-.container{
-    display: flex;
-    align-self: flex-start;
-}
-
-.flex-container {
-    padding: 2em 0 0 2em;
-    margin: 0;
+/* GENERAL */
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+} 
+ 
+ /* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
     
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
+  /* Media Query for Mobile Devices */ 
+  @media (max-width: 480px) { 
+    .notes-list{
+        height:30vh; 
+        overflow-y:scroll;
+    }
+
+    .btn-new-note{
+        display: block;
+        width: 40%;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        margin: 0 0 0 -20%;
+        padding: 0 0 1.5em 12em;
+    }
+
+    #editor{
+        height: 30vh;
+    }
+
+    .save-btn {
+        padding: 0.5em 0.5em 0 0;
+        float: left;
+    }
+    .delete-btn {
+        padding: 0.5em 0.5em 0 0;
+    }
+} 
+  
+/* Media Query for low resolution  Tablets, Ipads */ 
+@media (min-width: 481px) and (max-width: 767px) { 
+    body { 
+        background-color: yellow; 
+    } 
+} 
+  
+/* Media Query for Tablets Ipads portrait mode */ 
+@media (min-width: 768px) and (max-width: 1024px){ 
+    body { 
+        background-color: blue; 
+    } 
+} 
+  
+/* Media Query for Laptops and Desktops */ 
+@media (min-width: 1025px) and (max-width: 1280px){ 
+    body { 
+        background-color: green; 
+    } 
+} 
+  
+/* Media Query for Large screens */ 
+@media (min-width: 1281px) { 
+    body { 
+        background-color: white; 
+    } 
+    .notes-list{
+        width: 30%;
+    }
     
-    -webkit-flex-flow: row wrap;
-    justify-content: space-around;
-  }
+    #note-preview{  
+        width: 70%;
+        padding: 0 0 0 2em;
+    
+    }
+    
+    .btn{
+        margin: 0 0 0 1em;
+    }
+    
+    /*
+    .container{
+        display: flex;
+        align-self: flex-start;
+    }
+    */
+    .flex-container {
+        padding: 2em 0 0 2em;
+        margin: 0;
+        
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+
+        -webkit-flex-flow: row wrap;
+        justify-content: space-around;
+      }
+} 
