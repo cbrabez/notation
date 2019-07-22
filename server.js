@@ -51,7 +51,7 @@ app.use('/', indexRoutes);
 app.use('/users', userRoutes);
 
 // listen for requests
-app.listen(8626, () => {
+app.listen(process.env.PORT, () => {
     console.log("Server is listening on port "  + port);
 });
 

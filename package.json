@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start_local": "node -r dotenv/config server.js",
-    "start": "DB='mongodb://cbrabez:password123456@ds343217.mlab.com:43217/notation'&&node server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
