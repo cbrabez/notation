@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 var flash = require('connect-flash');
 var session = require('express-session');
-const{database, port} = require('./config/config')
+//const{database, port} = require('./config/config')
 
 // create express app
 const app = express();
@@ -28,13 +28,13 @@ app.use(function(req, res, next){
 });
 
 // Configuring the database
-//const dbConfig = require('./config/database.config.js');
+const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
 // Connecting to the database
-mongoose.connect(process.env.DB, {
+mongoose.connect(dbConfig.url, {
     useNewUrlParser: true
 }).then(() => {
     console.log("Successfully connected to the database");    
