@@ -34,7 +34,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 // Connecting to the database
-mongoose.connect(database, {
+mongoose.connect(process.env.DB, {
     useNewUrlParser: true
 }).then(() => {
     console.log("Successfully connected to the database");    
@@ -51,7 +51,7 @@ app.use('/', indexRoutes);
 app.use('/users', userRoutes);
 
 // listen for requests
-app.listen(port, () => {
+app.listen(process.env.PORT, () => {
     console.log("Server is listening on port "  + port);
 });
 
