@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/cbrabez/notation.git"
   },
-  "author": "cbrabez",
+  "author": "Christian Brabez",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cbrabez/notation/issues"
